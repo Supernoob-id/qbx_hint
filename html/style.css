@@ -1,0 +1,174 @@
+/* qbx_hint - NUI styles | Author: supernoob indonesia */
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+/* Defaults; overridden from config.lua (Config.Themes) */
+:root {
+    --bg: rgba(18, 18, 22, 0.90);
+    --text: #f2f2f2;
+    --subtext: rgba(255, 255, 255, 0.65);
+    --border: rgba(255, 255, 255, 0.10);
+    --accent: #9a9aa2;
+    --accent2: var(--accent);
+    --icon-bg: rgba(255, 255, 255, 0.06);
+    --key-bg: rgba(255, 255, 255, 0.10);
+    --key-border: rgba(255, 255, 255, 0.25);
+    --key-text: var(--text);
+    --glow: transparent;
+}
+
+html, body {
+    width: 100vw;
+    height: 100vh;
+    overflow: hidden;
+    background: transparent;
+    font-family: 'Segoe UI', Roboto, Arial, sans-serif;
+    user-select: none;
+}
+
+/* --tone2 is resolved per element: theme accent2 (two-tone) or accent (single) */
+.marker, .hint { --tone2: var(--accent2); }
+
+/* Shared show/hide (no backdrop-filter: cheaper on GPU) */
+.marker, .hint {
+    position: absolute;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.2s ease, visibility 0.2s;
+}
+.show { opacity: 1; visibility: visible; }
+.off  { opacity: 0 !important; visibility: hidden !important; transition: none !important; }
+
+/* ---------- Marker (far) ---------- */
+.marker {
+    transform: translate(-50%, -100%);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+/* Animation only on transform -> GPU composited, near-zero cost */
+.marker-bob {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    animation: bob 1.6s ease-in-out infinite;
+}
+
+.marker-pin {
+    width: 34px;
+    height: 34px;
+    display: grid;
+    place-items: center;
+    border-radius: 50%;
+    border: 2px solid transparent;
+    background:
+        linear-gradient(var(--bg), var(--bg)) padding-box,
+        linear-gradient(135deg, var(--accent), var(--tone2)) border-box;
+    color: var(--accent);
+    box-shadow: 0 0 8px var(--glow);
+    overflow: hidden;
+}
+
+.marker-tip {
+    width: 0;
+    height: 0;
+    margin-top: -1px;
+    border-left: 6px solid transparent;
+    border-right: 6px solid transparent;
+    border-top: 8px solid var(--tone2);
+}
+
+.marker-dist {
+    margin-top: 4px;
+    padding: 0 6px;
+    font-size: 11px;
+    font-weight: 700;
+    color: var(--text);
+    background: var(--bg);
+    border-radius: 3px;
+}
+.marker-dist:empty { display: none; }
+
+@keyframes bob {
+    0%, 100% { transform: translateY(0); }
+    50%      { transform: translateY(-6px); }
+}
+
+/* ---------- Hint panel (near) ---------- */
+.hint {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 10px 16px 10px 15px;
+    max-width: 340px;
+    background: var(--bg);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    color: var(--text);
+    overflow: hidden;
+}
+
+/* Left accent bar (gradient when two-tone) */
+.hint::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    width: 3px;
+    background: linear-gradient(180deg, var(--accent), var(--tone2));
+}
+
+.two-tone .marker-dist { border-bottom: 1px solid var(--tone2); }
+.hint.two-tone .hint-key { border-color: var(--tone2); }
+
+.hint.fixed {
+    right: 2.5vw;
+    top: 50%;
+    transform: translateY(-50%);
+}
+.hint.world { transform: translate(-50%, -100%); }
+
+.hint-icon {
+    flex-shrink: 0;
+    width: 34px;
+    height: 34px;
+    display: grid;
+    place-items: center;
+    border-radius: 5px;
+    background: var(--icon-bg);
+    color: var(--accent);
+    overflow: hidden;
+}
+
+.hint-title {
+    font-size: 13px;
+    font-weight: 700;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+    margin-bottom: 2px;
+}
+
+.hint-text {
+    font-size: 12.5px;
+    color: var(--subtext);
+    line-height: 1.5;
+}
+
+.hint-key {
+    display: inline-block;
+    padding: 0 6px;
+    margin: 0 2px;
+    font-size: 11px;
+    font-weight: 700;
+    color: var(--key-text);
+    background: var(--key-bg);
+    border: 1px solid var(--key-border);
+    border-radius: 3px;
+}
+.hint-key:empty { display: none; }
+
+/* Custom image icons */
+.marker-pin img { width: 22px; height: 22px; object-fit: contain; }
+.hint-icon img  { width: 24px; height: 24px; object-fit: contain; }
