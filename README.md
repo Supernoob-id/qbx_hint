@@ -70,3 +70,5 @@ and use `icon = 'img:filename.svg'`.
 
 ## License
 MIT - see [LICENSE](LICENSE). Credit is appreciated but not required.
+<img width="1920" height="1080" alt="qbx_hint1" src="https://github.com/user-attachments/assets/c3c7eb90-d163-4345-b46d-3485105f8196" />
+<img width="1920" height="1080" alt="qbx_hint2" src="https://github.com/user-attachments/assets/c48022f3-691b-4c4a-a793-2b385d4b8954" />
