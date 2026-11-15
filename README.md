@@ -1,7 +1,6 @@
 # qbx_hint
 
 Lightweight world-space info hints for FiveM (Qbox / ox_lib).
-Author: **supernoob indonesia**
 
 > **Free for the Qbox community.** I've received a lot of resources from this
 > community, so I want to give back what I can. Use it, modify it, share it.
